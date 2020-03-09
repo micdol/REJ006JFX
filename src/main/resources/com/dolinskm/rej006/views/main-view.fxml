@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0"
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.dolinskm.rej006.views.MainViewController">
+    <children>
+        <HBox spacing="10.0">
+            <children>
+                <Button fx:id="btnArchive" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onArchiveClicked" prefHeight="100.0" prefWidth="100.0" text="Archiwum"
+                        textAlignment="CENTER"/>
+                <Button fx:id="btnAppSettings" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onAppSettingsClicked" prefHeight="100.0" prefWidth="100.0"
+                        text="Ustawienia &#10;aplikacji" textAlignment="CENTER"/>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+                <Button fx:id="btnConnection" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onConnectionClicked" prefHeight="100.0" prefWidth="100.0" text="Połączenie"
+                        textAlignment="CENTER"/>
+                <GridPane hgap="10.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="ALWAYS"/>
+                    </rowConstraints>
+                    <children>
+                        <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Port: "
+                               GridPane.rowIndex="1"/>
+                        <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Połączenie: "
+                               GridPane.hgrow="ALWAYS"/>
+                        <Label fx:id="lblPort" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <CheckBox fx:id="chkConnection" disable="true" mnemonicParsing="false" opacity="1"
+                                  GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+        <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+            <children>
+                <Button fx:id="btnDeviceInfo" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onDeviceInfoClicked" prefHeight="100.0" prefWidth="100.0"
+                        text="Informacje &#10;o urządzeniu" textAlignment="CENTER"/>
+                <Button fx:id="btnOnlineRegistrations" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onOnlineRegistrationsClicked" prefHeight="100.0" prefWidth="100.0"
+                        text="Rejestracje &#10;Online" textAlignment="CENTER"/>
+                <Button fx:id="btnOfflineRegistrations" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onOfflineRegistrationsClicked" prefHeight="100.0" prefWidth="100.0"
+                        text="Rejestracje &#10;Offline&#10;" textAlignment="CENTER"/>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+</VBox>
