@@ -1,7 +1,9 @@
 package com.dolinskm.rej006.app;
 
 import com.dolinskm.rej006.SpringBootApp;
+import com.dolinskm.rej006.managers.ViewManager;
 import com.dolinskm.rej006.views.MainViewController;
+import com.dolinskm.rej006.views.View;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -27,8 +29,6 @@ public class Rej006App extends Application {
     public void init() throws Exception {
         logger.info("init");
 
-        super.init();
-
         String[] args = getParameters()
                 .getRaw()
                 .toArray(new String[0]);
@@ -49,10 +49,7 @@ public class Rej006App extends Application {
     public void start(Stage primaryStage) {
         logger.info("start");
 
-        final FxWeaver fxWeaver = context.getBean(FxWeaver.class);
-        final Pane root = fxWeaver.loadView(MainViewController.class);
-        root.setPrefSize(800, 600);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        final ViewManager viewManager = context.getBean(ViewManager.class);
+        viewManager.show(View.Main);
     }
 }

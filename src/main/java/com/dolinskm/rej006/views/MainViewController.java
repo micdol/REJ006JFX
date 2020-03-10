@@ -1,16 +1,20 @@
 package com.dolinskm.rej006.views;
 
+import com.dolinskm.rej006.managers.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @FxmlView("main-view.fxml")
 public class MainViewController {
+
+    // region FXML Controls
 
     @FXML
     private Button btnArchive;
@@ -36,6 +40,11 @@ public class MainViewController {
     @FXML
     private Button btnOfflineRegistrations;
 
+    // endregion
+
+    @Autowired
+    private ViewManager viewManager;
+
     @FXML
     void onAppSettingsClicked(ActionEvent event) {
 
@@ -43,7 +52,7 @@ public class MainViewController {
 
     @FXML
     void onArchiveClicked(ActionEvent event) {
-
+        viewManager.show(View.Archive);
     }
 
     @FXML
