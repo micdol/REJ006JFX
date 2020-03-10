@@ -57,22 +57,22 @@ public class MainViewController {
 
     @FXML
     void onConnectionClicked(ActionEvent event) {
-
+        viewManager.show(View.Connection);
     }
 
     @FXML
     void onDeviceInfoClicked(ActionEvent event) {
-
+        viewManager.show(View.DeviceInfo);
     }
 
     @FXML
     void onOfflineRegistrationsClicked(ActionEvent event) {
-
+        viewManager.show(View.Offline);
     }
 
     @FXML
     void onOnlineRegistrationsClicked(ActionEvent event) {
-
+        viewManager.show(View.Online);
     }
 
 }

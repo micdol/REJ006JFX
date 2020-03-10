@@ -6,7 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleButton;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Controller;
 
+@Controller
+@FxmlView("plot-view.fxml")
 public class PlotViewController {
 
     @FXML

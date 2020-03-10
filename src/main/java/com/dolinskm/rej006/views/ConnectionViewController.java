@@ -5,7 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Controller;
 
+@Controller
+@FxmlView("connection-view.fxml")
 public class ConnectionViewController {
 
     @FXML

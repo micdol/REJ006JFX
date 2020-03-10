@@ -78,7 +78,7 @@
                 <Button fx:id="btnReset" mnemonicParsing="false" onAction="#onResetClicked" text="Reset"/>
             </children>
         </HBox>
-        <fx:include fx:id="backPane" source="../controls/back-pane.fxml"/>
+        <fx:include fx:id="backPane" source="../controls/back-pane.fxml" VBox.vgrow="ALWAYS"/>
     </children>
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>

@@ -6,7 +6,7 @@ public enum View {
     DeviceInfo(DeviceInfoViewController.class),
     Main(MainViewController.class),
     // TODO offline views: settings and download - should be under in common view (TabPane?)
-    Offline(OfflineRegistrationDownloadViewController.class),
+    Offline(OfflineViewController.class),
     Online(OnlineRegistrationViewController.class),
     Plot(PlotViewController.class);
 

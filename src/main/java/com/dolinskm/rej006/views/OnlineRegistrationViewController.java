@@ -5,7 +5,11 @@ import com.dolinskm.rej006.controls.SettingsGridController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Controller;
 
+@Controller
+@FxmlView("online-registration-view.fxml")
 public class OnlineRegistrationViewController {
 
     @FXML

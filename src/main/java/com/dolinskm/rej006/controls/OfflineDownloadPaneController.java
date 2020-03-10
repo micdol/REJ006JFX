@@ -1,4 +1,4 @@
-package com.dolinskm.rej006.views;
+package com.dolinskm.rej006.controls;
 
 import com.dolinskm.rej006.controls.BackPaneController;
 import javafx.event.ActionEvent;
@@ -6,8 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Spinner;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Controller;
 
-public class OfflineRegistrationDownloadViewController {
+@Controller
+@FxmlView("offline-download-pane.fxml")
+public class OfflineDownloadPaneController {
 
     @FXML
     private Spinner<?> spnRegistrationNumber;

@@ -32,38 +32,36 @@ public class ViewManager {
     public void show(@NotNull View view) {
         logger.info("show - new: " + view + ", old: " + currentView);
 
-        viewStack.push(currentView);
-        final Parent root = (Parent) fxWeaver.loadView(view.getControllerClass());
-
         if (currentStage == null) {
             logger.info("show - no stage, creating new");
             currentStage = new Stage();
             currentStage.setTitle("REJ006");
         }
 
-        Scene scene = new Scene(root);
-        currentStage.setScene(scene);
-        currentStage.show();
-
-        currentView = view;
+        viewStack.push(currentView);
+        display(view);
     }
 
     public void back() {
         if (viewStack.empty()) {
             throw new IllegalStateException("View stack empty?!");
         }
-
         if (currentStage == null) {
             throw new IllegalStateException("No current stage?!");
         }
 
         final View view = viewStack.pop();
-
         logger.info("back - old: " + currentView + ", new: " + view);
+        display(view);
+    }
 
-        final Parent root = (Parent) fxWeaver.loadView(view.getControllerClass());
-        final Scene scene = new Scene(root);
+    private void display(@NotNull View view) {
+        final Pane root = (Pane) fxWeaver.loadView(view.getControllerClass());
+        root.setPrefSize(800, 600);
+        Scene scene = new Scene(root);
         currentStage.setScene(scene);
         currentStage.show();
+        currentView = view;
     }
+
 }

@@ -5,18 +5,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+
 <VBox spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.dolinskm.rej006.views.OnlineRegistrationViewController">
+      fx:controller="com.dolinskm.rej006.controls.OfflineSettingsPaneController">
     <children>
-        <fx:include fx:id="settingsGrid" source="../controls/settings-grid.fxml"/>
+        <fx:include fx:id="settingsGrid" source="settings-grid.fxml"/>
         <HBox spacing="10.0">
             <children>
-                <Button fx:id="btnZeroing" mnemonicParsing="false" onAction="#onZeroingClicked" text="Zerowanie"/>
+                <Button fx:id="btnSetSettings" mnemonicParsing="false" onAction="#onSetSettingsClicked" text="Wyślij"/>
+                <Button fx:id="btnGetSettings" mnemonicParsing="false" onAction="#onGetSettingsClicked" text="Pobierz"/>
                 <Button fx:id="btnStartRegistration" mnemonicParsing="false" onAction="#onStartRegistrationClicked"
                         text="Start..."/>
             </children>
         </HBox>
-        <fx:include fx:id="backPane" source="../controls/back-pane.fxml"/>
     </children>
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>

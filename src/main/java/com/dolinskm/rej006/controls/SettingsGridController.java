@@ -8,8 +8,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.RowConstraints;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class SettingsGridController {
+
+    // region FXML Controls
 
     @FXML
     private RowConstraints rowDelay;
@@ -65,6 +69,10 @@ public class SettingsGridController {
     @FXML
     private ComboBox<?> cbxSettings;
 
+    // endregion
+
+    // region FXML Action Handlers
+
     @FXML
     void onLoadClicked(ActionEvent event) {
 
@@ -75,4 +83,5 @@ public class SettingsGridController {
 
     }
 
+    // endregion
 }
