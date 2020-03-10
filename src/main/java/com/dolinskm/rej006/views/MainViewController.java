@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 @FxmlView("main-view.fxml")
 public class MainViewController {
 
+    @Autowired
+    private ViewManager viewManager;
+
     // region FXML Controls
 
     @FXML
@@ -42,12 +45,11 @@ public class MainViewController {
 
     // endregion
 
-    @Autowired
-    private ViewManager viewManager;
+    // region FXML Action Handlers
 
     @FXML
     void onAppSettingsClicked(ActionEvent event) {
-
+        viewManager.show(View.AppSettings);
     }
 
     @FXML
@@ -75,4 +77,5 @@ public class MainViewController {
         viewManager.show(View.Online);
     }
 
+    // endregion
 }

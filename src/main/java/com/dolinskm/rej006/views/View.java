@@ -1,11 +1,11 @@
 package com.dolinskm.rej006.views;
 
 public enum View {
+    AppSettings(AppSettingsViewController.class),
     Archive(ArchiveViewController.class),
     Connection(ConnectionViewController.class),
     DeviceInfo(DeviceInfoViewController.class),
     Main(MainViewController.class),
-    // TODO offline views: settings and download - should be under in common view (TabPane?)
     Offline(OfflineViewController.class),
     Online(OnlineViewController.class),
     Plot(PlotViewController.class);
