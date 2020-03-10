@@ -1,5 +1,6 @@
 package com.dolinskm.rej006.views;
 
+import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.controls.SettingsGridController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,15 +19,10 @@ public class OfflineSettingsViewController {
     private Button btnStartRegistration;
 
     @FXML
-    private Button btnBack;
-
-    @FXML
     private SettingsGridController settingsGridController;
 
     @FXML
-    void onBackClicked(ActionEvent event) {
-
-    }
+    private BackPaneController backPaneController;
 
     @FXML
     void onGetSettingsClicked(ActionEvent event) {

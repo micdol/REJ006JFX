@@ -1,5 +1,6 @@
 package com.dolinskm.rej006.views;
 
+import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.managers.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,17 +38,12 @@ public class ArchiveViewController {
     private Button btnShowPlot;
 
     @FXML
-    private Button btnBack;
+    private BackPaneController backPaneController;
 
     // endregion
 
     @Autowired
     private ViewManager viewManager;
-
-    @FXML
-    void onBackClicked(ActionEvent event) {
-        viewManager.back();
-    }
 
     @FXML
     void onBrowseDirectoryClicked(ActionEvent event) {

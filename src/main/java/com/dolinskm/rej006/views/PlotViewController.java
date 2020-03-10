@@ -1,5 +1,6 @@
 package com.dolinskm.rej006.views;
 
+import com.dolinskm.rej006.controls.BackPaneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,12 +25,7 @@ public class PlotViewController {
     private ToggleButton tglCursorsY;
 
     @FXML
-    private Button btnBack;
-
-    @FXML
-    void onBackClicked(ActionEvent event) {
-
-    }
+    private BackPaneController backPaneController;
 
     @FXML
     void onCursorsXToggled(ActionEvent event) {
