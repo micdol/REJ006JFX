@@ -57,7 +57,7 @@ public class ArchiveViewController {
 
     @FXML
     void onShowPlotClicked(ActionEvent event) {
-
+        viewManager.show(View.Plot);
     }
 
 }

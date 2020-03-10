@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.dolinskm.rej006.views.OnlineRegistrationViewController">
+      fx:controller="com.dolinskm.rej006.views.OnlineViewController">
     <children>
         <fx:include fx:id="settingsGrid" source="../controls/settings-grid.fxml"/>
         <HBox spacing="10.0">

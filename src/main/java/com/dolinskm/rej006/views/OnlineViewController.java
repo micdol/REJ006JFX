@@ -2,15 +2,22 @@ package com.dolinskm.rej006.views;
 
 import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.controls.SettingsGridController;
+import com.dolinskm.rej006.managers.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@FxmlView("online-registration-view.fxml")
-public class OnlineRegistrationViewController {
+@FxmlView("online-view.fxml")
+public class OnlineViewController {
+
+    @Autowired
+    private ViewManager viewManager;
+
+    // region FXML Controls
 
     @FXML
     private Button btnZeroing;
@@ -24,9 +31,13 @@ public class OnlineRegistrationViewController {
     @FXML
     private BackPaneController backPaneController;
 
+    // endregion
+
+    // region FXML Action Handlers
+
     @FXML
     void onStartRegistrationClicked(ActionEvent event) {
-
+        viewManager.show(View.Plot);
     }
 
     @FXML
@@ -34,4 +45,5 @@ public class OnlineRegistrationViewController {
 
     }
 
+    // endregion
 }

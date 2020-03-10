@@ -33,7 +33,6 @@ public class OfflineViewController {
 
     @FXML
     void initialize() {
-        logger.info("" + settingsController);
-        logger.info("" + downloadController);
+
     }
 }
