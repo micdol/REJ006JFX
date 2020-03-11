@@ -2,13 +2,9 @@ package com.dolinskm.rej006.managers;
 
 import com.dolinskm.rej006.views.View;
 import com.sun.istack.internal.NotNull;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,6 +15,7 @@ public class Registration {
     private final ObservableList<Byte> data = FXCollections.observableArrayList();
     private final StringProperty name = new SimpleStringProperty();
     private final ObjectProperty<LocalTime> date = new SimpleObjectProperty<>();
+    private final StringProperty notes = new SimpleStringProperty();
 
     // region Properties Getters/Setters
 
@@ -68,6 +69,18 @@ public class Registration {
 
     public void setDate(LocalTime date) {
         this.date.set(date);
+    }
+
+    public String getNotes() {
+        return notes.get();
+    }
+
+    public StringProperty notesProperty() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes.set(notes);
     }
 
     // endregion

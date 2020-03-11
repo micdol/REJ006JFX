@@ -2,10 +2,10 @@ package com.dolinskm.rej006.controls;
 
 import com.dolinskm.rej006.managers.ViewManager;
 import javafx.event.ActionEvent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class BackPaneController {

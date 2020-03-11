@@ -1,11 +1,8 @@
 package com.dolinskm.rej006.controls;
 
-import com.dolinskm.rej006.controls.BackPaneController;
-import com.dolinskm.rej006.controls.SettingsGridController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Controller;
 

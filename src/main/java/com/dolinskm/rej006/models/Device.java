@@ -3,6 +3,7 @@ package com.dolinskm.rej006.models;
 import javafx.beans.property.*;
 
 public class Device {
+
     private final StringProperty name = new SimpleStringProperty();
     private final IntegerProperty id = new SimpleIntegerProperty(-1);
     private final StringProperty firmware = new SimpleStringProperty();

@@ -1,6 +1,5 @@
 package com.dolinskm.rej006.controls;
 
-import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.managers.ViewManager;
 import com.dolinskm.rej006.views.View;
 import javafx.event.ActionEvent;

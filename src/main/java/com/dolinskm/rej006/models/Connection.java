@@ -5,9 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.springframework.stereotype.Component;
 
-@Component
 public class Connection {
 
     private final ObjectProperty<Device> device = new SimpleObjectProperty<>();
