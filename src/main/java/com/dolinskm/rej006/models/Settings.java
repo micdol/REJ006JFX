@@ -10,7 +10,12 @@ public class Settings {
     private final ObjectProperty<Accelerometer> accelerometer = new SimpleObjectProperty<>();
     private final ObjectProperty<Gyroscope> gyroscope = new SimpleObjectProperty<>();
     private final ObjectProperty<Mode> mode = new SimpleObjectProperty<>(Mode.Offline);
-
+    private final BooleanProperty ax = new SimpleBooleanProperty();
+    private final BooleanProperty ay = new SimpleBooleanProperty();
+    private final BooleanProperty az = new SimpleBooleanProperty();
+    private final BooleanProperty roll = new SimpleBooleanProperty();
+    private final BooleanProperty pitch = new SimpleBooleanProperty();
+    private final BooleanProperty yaw = new SimpleBooleanProperty();
     private final StringProperty name = new SimpleStringProperty();
 
     // region Properties Getters/Setters
@@ -109,6 +114,78 @@ public class Settings {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public boolean isAx() {
+        return ax.get();
+    }
+
+    public BooleanProperty axProperty() {
+        return ax;
+    }
+
+    public void setAx(boolean ax) {
+        this.ax.set(ax);
+    }
+
+    public boolean isAy() {
+        return ay.get();
+    }
+
+    public BooleanProperty ayProperty() {
+        return ay;
+    }
+
+    public void setAy(boolean ay) {
+        this.ay.set(ay);
+    }
+
+    public boolean isAz() {
+        return az.get();
+    }
+
+    public BooleanProperty azProperty() {
+        return az;
+    }
+
+    public void setAz(boolean az) {
+        this.az.set(az);
+    }
+
+    public boolean isRoll() {
+        return roll.get();
+    }
+
+    public BooleanProperty rollProperty() {
+        return roll;
+    }
+
+    public void setRoll(boolean roll) {
+        this.roll.set(roll);
+    }
+
+    public boolean isPitch() {
+        return pitch.get();
+    }
+
+    public BooleanProperty pitchProperty() {
+        return pitch;
+    }
+
+    public void setPitch(boolean pitch) {
+        this.pitch.set(pitch);
+    }
+
+    public boolean isYaw() {
+        return yaw.get();
+    }
+
+    public BooleanProperty yawProperty() {
+        return yaw;
+    }
+
+    public void setYaw(boolean yaw) {
+        this.yaw.set(yaw);
     }
 
     // endregion
