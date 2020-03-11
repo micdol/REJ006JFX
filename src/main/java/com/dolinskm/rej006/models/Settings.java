@@ -1,5 +1,6 @@
 package com.dolinskm.rej006.models;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 
 public class Settings {
@@ -17,6 +18,16 @@ public class Settings {
     private final BooleanProperty pitch = new SimpleBooleanProperty();
     private final BooleanProperty yaw = new SimpleBooleanProperty();
     private final StringProperty name = new SimpleStringProperty();
+
+    {
+        channelCount.bind(
+                Bindings.when(ax).then(1).otherwise(0)
+                        .add(Bindings.when(ay).then(1).otherwise(0))
+                        .add(Bindings.when(az).then(1).otherwise(0))
+                        .add(Bindings.when(roll).then(1).otherwise(0))
+                        .add(Bindings.when(pitch).then(1).otherwise(0))
+                        .add(Bindings.when(yaw).then(1).otherwise(0)));
+    }
 
     // region Properties Getters/Setters
 
@@ -48,12 +59,8 @@ public class Settings {
         return channelCount.get();
     }
 
-    public IntegerProperty channelCountProperty() {
+    public ReadOnlyIntegerProperty channelCountProperty() {
         return channelCount;
-    }
-
-    public void setChannelCount(int channelCount) {
-        this.channelCount.set(channelCount);
     }
 
     public Frequency getFrequency() {
