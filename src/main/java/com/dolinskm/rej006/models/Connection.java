@@ -1,5 +1,6 @@
 package com.dolinskm.rej006.models;
 
+import com.dolinskm.rej006.models.device.Device;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;

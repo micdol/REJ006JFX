@@ -1,4 +1,4 @@
-package com.dolinskm.rej006.models;
+package com.dolinskm.rej006.models.device;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

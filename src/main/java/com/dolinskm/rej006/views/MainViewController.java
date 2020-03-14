@@ -1,6 +1,9 @@
 package com.dolinskm.rej006.views;
 
 import com.dolinskm.rej006.managers.ViewManager;
+import com.dolinskm.rej006.models.Connection;
+import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +19,9 @@ public class MainViewController {
 
     @Autowired
     private ViewManager viewManager;
+
+    @Autowired
+    private IConnectionWrapper connectionWrapper;
 
     // region FXML Controls
 
@@ -78,4 +84,21 @@ public class MainViewController {
     }
 
     // endregion
+
+    @FXML
+    void initialize() {
+        final Connection connection = connectionWrapper.getConnection();
+
+        btnDeviceInfo.disableProperty().bind(connection.activeProperty().not());
+        btnOnlineRegistrations.disableProperty().bind(connection.activeProperty().not());
+        btnOfflineRegistrations.disableProperty().bind(connection.activeProperty().not());
+
+        lblPort.textProperty().bind(Bindings.createStringBinding(() -> {
+            if (connection.isActive()) {
+                return connection.getPort().getSystemPortName();
+            }
+            return "?";
+        }, connection.activeProperty(), connection.portProperty()));
+        chkConnection.selectedProperty().bind(connection.activeProperty());
+    }
 }

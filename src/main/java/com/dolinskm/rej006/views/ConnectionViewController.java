@@ -1,19 +1,42 @@
 package com.dolinskm.rej006.views;
 
 import com.dolinskm.rej006.controls.BackPaneController;
+import com.dolinskm.rej006.models.Connection;
+import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
+import com.dolinskm.rej006.services.DeviceService;
+import com.dolinskm.rej006.services.tasks.ConnectTask;
+import com.dolinskm.rej006.services.tasks.DeviceTaskBase;
+import com.dolinskm.rej006.services.tasks.DisconnectTask;
+import com.dolinskm.rej006.utils.SerialPortListCell;
+import com.fazecast.jSerialComm.SerialPort;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SingleSelectionModel;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @FxmlView("connection-view.fxml")
 public class ConnectionViewController {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private IConnectionWrapper connectionController;
+
+    @Autowired
+    private DeviceService deviceService;
+
+    // region FXML Controls
+
     @FXML
-    private ComboBox<?> cbxPorts;
+    private ComboBox<SerialPort> cbxPorts;
 
     @FXML
     private Button btnRefreshPorts;
@@ -27,19 +50,71 @@ public class ConnectionViewController {
     @FXML
     private BackPaneController backPaneController;
 
+    // endregion
+
+    // region FXML Action Handlers
+
     @FXML
     void onConnectClicked(ActionEvent event) {
-
+        final DeviceTaskBase task = new ConnectTask();
+        deviceService.enqueue(task);
+        deviceService.restart();
     }
 
     @FXML
     void onDisconnectClicked(ActionEvent event) {
-
+        final DeviceTaskBase task = new DisconnectTask();
+        deviceService.enqueue(task);
+        deviceService.restart();
     }
 
     @FXML
     void onRefreshPortsClicked(ActionEvent event) {
-
+        refreshPorts();
     }
 
+    // endregion
+
+    @FXML
+    void initialize() {
+        logger.info("initialize");
+
+        cbxPorts.setCellFactory(unused -> new SerialPortListCell());
+        cbxPorts.setButtonCell(new SerialPortListCell());
+
+        final Connection connection = connectionController.getConnection();
+        connection.portProperty().bind(cbxPorts.valueProperty());
+
+        cbxPorts.disableProperty().bind(connection.activeProperty().or(connection.busyProperty()));
+        btnRefreshPorts.disableProperty().bind(connection.activeProperty().or(connection.busyProperty()));
+        btnConnect.disableProperty().bind(connection.activeProperty().or(connection.busyProperty()));
+        btnDisconnect.disableProperty().bind(connection.activeProperty().not().or(connection.busyProperty()));
+
+        cbxPorts.requestFocus();
+
+        refreshPorts();
+    }
+
+    public void refreshPorts() {
+        logger.info("refreshPorts");
+
+        final SingleSelectionModel<SerialPort> selectionModel = cbxPorts.getSelectionModel();
+        final SerialPort selectedItem = selectionModel.getSelectedItem();
+        final ObservableList<SerialPort> items = cbxPorts.getItems();
+
+        logger.info("refreshPorts - selected item: " + selectedItem);
+
+        items.clear();
+        items.addAll(SerialPort.getCommPorts());
+
+        selectionModel.select(0);
+        for (int i = 0; i < items.size() && selectedItem != null; i++) {
+            final SerialPort item = items.get(i);
+            if (item.getSystemPortName().equals(selectedItem.getSystemPortName())) {
+                logger.info("refreshPorts - re-selecting item: " + selectedItem);
+                selectionModel.select(i);
+                break;
+            }
+        }
+    }
 }

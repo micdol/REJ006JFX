@@ -1,4 +1,4 @@
-package com.dolinskm.rej006.models;
+package com.dolinskm.rej006.models.device;
 
 public enum Gyroscope {
     G250,
