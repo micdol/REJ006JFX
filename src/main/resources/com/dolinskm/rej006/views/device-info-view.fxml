@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.dolinskm.rej006.views.DeviceInfoViewController">
     <children>
+        3.
         <HBox>
             <children>
                 <GridPane hgap="10.0" vgap="10.0">
@@ -32,30 +26,38 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label text="Nazwa"/>
-                        <Label text="ID" GridPane.rowIndex="1"/>
-                        <Label text="Oprogramowanie" GridPane.rowIndex="2"/>
-                        <Label text="Bateria" GridPane.rowIndex="3"/>
-                        <Label text="Pojemność FLASH" GridPane.rowIndex="4"/>
-                        <Label text="Rejestracje we FLASH" GridPane.rowIndex="5"/>
-                        <Label text="Status" GridPane.rowIndex="6"/>
-                        <Label text="Kod synchronizacji" GridPane.rowIndex="7"/>
-                        <TextField fx:id="txtName" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"/>
-                        <TextField fx:id="txtID" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <TextField fx:id="txtFirmware" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <TextField fx:id="txtFlashCapacity" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <TextField fx:id="txtRegistrationCount" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                        <TextField fx:id="txtBattery" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <TextField fx:id="txtStatus" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                        <TextField fx:id="txtSyncCode" editable="false" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                        <Label focusTraversable="false" text="Nazwa"/>
+                        <Label focusTraversable="false" text="ID" GridPane.rowIndex="1"/>
+                        <Label focusTraversable="false" text="Oprogramowanie" GridPane.rowIndex="2"/>
+                        <Label focusTraversable="false" text="Bateria" GridPane.rowIndex="3"/>
+                        <Label focusTraversable="false" text="Pojemność FLASH" GridPane.rowIndex="4"/>
+                        <Label focusTraversable="false" text="Rejestracje we FLASH" GridPane.rowIndex="5"/>
+                        <Label focusTraversable="false" text="Status" GridPane.rowIndex="6"/>
+                        <Label focusTraversable="false" text="Kod synchronizacji" GridPane.rowIndex="7"/>
+                        <TextField fx:id="txtName" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtID" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtFirmware" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <TextField fx:id="txtFlashCapacity" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <TextField fx:id="txtRegistrationCount" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <TextField fx:id="txtBattery" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <TextField fx:id="txtStatus" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                        <TextField fx:id="txtSyncCode" editable="false" focusTraversable="false"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="7"/>
                         <Button fx:id="btnChangeID" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                 mnemonicParsing="false" onAction="#onChangeIDClicked" text="Zmień..."
                                 GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1"/>

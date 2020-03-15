@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public class Connection {
 
-    private final ObjectProperty<Device> device = new SimpleObjectProperty<>();
+    private final ObjectProperty<Device> device = new SimpleObjectProperty<>(new Device());
     private final ObjectProperty<SerialPort> port = new SimpleObjectProperty<>();
     private final BooleanProperty active = new SimpleBooleanProperty(false);
     private final BooleanProperty busy = new SimpleBooleanProperty(false);

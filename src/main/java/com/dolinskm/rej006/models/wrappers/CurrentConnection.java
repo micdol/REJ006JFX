@@ -4,7 +4,7 @@ import com.dolinskm.rej006.models.Connection;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CurrentConnectionWrapper implements IConnectionWrapper {
+public class CurrentConnection implements IConnectionWrapper {
 
     private Connection connection;
 

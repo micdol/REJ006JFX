@@ -3,9 +3,7 @@ package com.dolinskm.rej006.services;
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
 import com.dolinskm.rej006.services.tasks.DeviceTaskBase;
 import com.dolinskm.rej006.utils.DaemonThreadFactory;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ public class DeviceService extends Service<Void> {
     private IConnectionWrapper connectionWrapper;
 
     private final Queue<DeviceTaskBase> taskQueue = new LinkedBlockingQueue<>();
-    private final ObjectProperty<DeviceTaskBase> currentTask = new SimpleObjectProperty<>();
 
     @Autowired
     public DeviceService(DaemonThreadFactory threadFactory) {
@@ -40,30 +37,23 @@ public class DeviceService extends Service<Void> {
         }
 
         final DeviceTaskBase task = taskQueue.remove();
-        currentTask.set(task);
+        task.setConnectionWrapper(connectionWrapper);
+        task.messageProperty().addListener((o, ov, nv) -> logger.info(nv));
         return task;
     }
 
     @Override
-    protected void scheduled() {
-        logger.info("scheduled");
-        getCurrentTask().setConnectionWrapper(connectionWrapper);
+    protected void succeeded() {
+        if (!taskQueue.isEmpty()) {
+            Platform.runLater(() -> {
+                reset();
+                start();
+            });
+        }
     }
 
     public void enqueue(DeviceTaskBase task) {
         logger.info("enqueue - task: " + task);
         taskQueue.add(task);
     }
-
-    // region Properties Getters/Setters
-
-    public DeviceTaskBase getCurrentTask() {
-        return currentTask.get();
-    }
-
-    public ReadOnlyObjectProperty<DeviceTaskBase> currentTaskProperty() {
-        return currentTask;
-    }
-
-    // endregion
 }

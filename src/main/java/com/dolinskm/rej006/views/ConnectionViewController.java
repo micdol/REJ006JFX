@@ -7,6 +7,7 @@ import com.dolinskm.rej006.services.DeviceService;
 import com.dolinskm.rej006.services.tasks.ConnectTask;
 import com.dolinskm.rej006.services.tasks.DeviceTaskBase;
 import com.dolinskm.rej006.services.tasks.DisconnectTask;
+import com.dolinskm.rej006.services.tasks.NameIDTask;
 import com.dolinskm.rej006.utils.SerialPortListCell;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.collections.ObservableList;
@@ -56,13 +57,19 @@ public class ConnectionViewController {
 
     @FXML
     void onConnectClicked(ActionEvent event) {
-        final DeviceTaskBase task = new ConnectTask();
-        deviceService.enqueue(task);
+        logger.info("onConnectClicked");
+
+        final DeviceTaskBase task1 = new ConnectTask();
+        final DeviceTaskBase task2 = new NameIDTask();
+        deviceService.enqueue(task1);
+        deviceService.enqueue(task2);
         deviceService.restart();
     }
 
     @FXML
     void onDisconnectClicked(ActionEvent event) {
+        logger.info("onDisconnectClicked");
+
         final DeviceTaskBase task = new DisconnectTask();
         deviceService.enqueue(task);
         deviceService.restart();
@@ -77,8 +84,6 @@ public class ConnectionViewController {
 
     @FXML
     void initialize() {
-        logger.info("initialize");
-
         cbxPorts.setCellFactory(unused -> new SerialPortListCell());
         cbxPorts.setButtonCell(new SerialPortListCell());
 
@@ -96,13 +101,9 @@ public class ConnectionViewController {
     }
 
     public void refreshPorts() {
-        logger.info("refreshPorts");
-
         final SingleSelectionModel<SerialPort> selectionModel = cbxPorts.getSelectionModel();
         final SerialPort selectedItem = selectionModel.getSelectedItem();
         final ObservableList<SerialPort> items = cbxPorts.getItems();
-
-        logger.info("refreshPorts - selected item: " + selectedItem);
 
         items.clear();
         items.addAll(SerialPort.getCommPorts());
@@ -111,7 +112,6 @@ public class ConnectionViewController {
         for (int i = 0; i < items.size() && selectedItem != null; i++) {
             final SerialPort item = items.get(i);
             if (item.getSystemPortName().equals(selectedItem.getSystemPortName())) {
-                logger.info("refreshPorts - re-selecting item: " + selectedItem);
                 selectionModel.select(i);
                 break;
             }
