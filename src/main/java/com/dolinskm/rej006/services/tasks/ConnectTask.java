@@ -1,6 +1,7 @@
 package com.dolinskm.rej006.services.tasks;
 
 import com.dolinskm.rej006.models.Connection;
+import com.dolinskm.rej006.services.tasks.base.DeviceTaskBase;
 import com.fazecast.jSerialComm.SerialPort;
 
 public class ConnectTask extends DeviceTaskBase {
@@ -21,6 +22,7 @@ public class ConnectTask extends DeviceTaskBase {
         updateMessage("Łączenie...");
 
         final boolean isOpen = port.openPort(0, 512, 512);
+        pause(500);
         connection.setActive(isOpen);
 
         updateProgress(2, 2);

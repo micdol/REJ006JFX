@@ -1,7 +1,7 @@
 package com.dolinskm.rej006.services;
 
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
-import com.dolinskm.rej006.services.tasks.DeviceTaskBase;
+import com.dolinskm.rej006.services.tasks.base.DeviceTaskBase;
 import com.dolinskm.rej006.utils.DaemonThreadFactory;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -52,8 +52,19 @@ public class DeviceService extends Service<Void> {
         }
     }
 
+    @Override
+    protected void failed() {
+        taskQueue.clear();
+        Platform.runLater(() -> {
+            reset();
+            //enqueue(new DisconnectTask());
+            //start();
+        });
+    }
+
     public void enqueue(DeviceTaskBase task) {
         logger.info("enqueue - task: " + task);
         taskQueue.add(task);
     }
+
 }

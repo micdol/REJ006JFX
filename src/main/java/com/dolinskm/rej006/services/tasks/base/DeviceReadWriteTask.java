@@ -1,7 +1,5 @@
-package com.dolinskm.rej006.services.tasks;
+package com.dolinskm.rej006.services.tasks.base;
 
-import com.dolinskm.rej006.models.Connection;
-import com.fazecast.jSerialComm.SerialPort;
 import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
@@ -27,13 +25,15 @@ public abstract class DeviceReadWriteTask extends DeviceTaskBase {
 
     protected abstract void parseResponse(byte[] buffer, int bytesRead) throws IOException;
 
-    protected abstract byte[] responseBuffer();
+    protected byte[] responseBuffer() {
+        return new byte[32];
+    }
 
     @Override
     protected Void call() throws Exception {
         updateProgress(1, 5);
         updateMessage(String.format("[%s] Wysyłanie zapytania...", getTaskName()));
-        write(request);
+        write(getRequest());
 
         updateProgress(2, 5);
         updateMessage(String.format("[%s] Oczekiwanie na odpowiedź...", getTaskName()));
@@ -52,26 +52,4 @@ public abstract class DeviceReadWriteTask extends DeviceTaskBase {
         return null;
     }
 
-    protected final void write(byte[] data) throws IOException, InterruptedException {
-        final Connection connection = getConnectionWrapper().getConnection();
-        final SerialPort port = connection.getPort();
-
-        final int written = port.writeBytes(data, data.length);
-        pause();
-        if (written <= 0) {
-            throw new IOException("Error writing bytes");
-        }
-    }
-
-    protected final int read(byte[] buffer) throws IOException, InterruptedException {
-        final Connection connection = getConnectionWrapper().getConnection();
-        final SerialPort port = connection.getPort();
-
-        pause();
-        final int bytesRead = port.readBytes(buffer, buffer.length);
-        if (bytesRead <= 0) {
-            throw new IOException("Error reading bytes");
-        }
-        return bytesRead;
-    }
 }

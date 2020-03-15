@@ -6,11 +6,11 @@ import com.dolinskm.rej006.services.tasks.base.DeviceReadWriteTask;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class NameIDTask extends DeviceReadWriteTask {
+public class FirmwareTask extends DeviceReadWriteTask {
 
     {
-        setTaskName("Nazwa i ID");
-        setRequest(new byte[]{0x02});
+        setTaskName("Oprogramowanie");
+        setRequest(new byte[]{0x04});
     }
 
     @Override
@@ -19,14 +19,12 @@ public class NameIDTask extends DeviceReadWriteTask {
             throw new IOException("Invalid data received");
         }
 
-        int id = buffer[bytesRead - 1] & 0xff;
-        String name = new String(buffer, 0, bytesRead - 1, StandardCharsets.US_ASCII);
-        logger.info("parseResponse - name: {}, id: {}", name, id);
+        String firmware = new String(buffer, 0, bytesRead, StandardCharsets.US_ASCII);
+        logger.info("parseResponse - firmware: {}", firmware);
 
         final Device device = getConnectionWrapper().getConnection().getDevice();
-        device.setName(name);
-        device.setId(id);
+        device.setFirmware(firmware);
 
-        updateMessage(String.format("[%s] Nazwa: %s, ID: %d", getTaskName(), name, id));
+        updateMessage(String.format("[%s] Oprogramowanie: %s", getTaskName(), firmware));
     }
 }

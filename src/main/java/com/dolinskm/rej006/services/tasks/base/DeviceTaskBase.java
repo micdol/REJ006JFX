@@ -1,12 +1,16 @@
-package com.dolinskm.rej006.services.tasks;
+package com.dolinskm.rej006.services.tasks.base;
 
+import com.dolinskm.rej006.models.Connection;
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.concurrent.Task;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 public abstract class DeviceTaskBase extends Task<Void> {
 
@@ -18,7 +22,7 @@ public abstract class DeviceTaskBase extends Task<Void> {
 
     @Getter
     @Setter
-    private long waitTime = 50;
+    private long waitTime = 250;
 
     @Setter
     @Getter
@@ -52,8 +56,33 @@ public abstract class DeviceTaskBase extends Task<Void> {
         getConnectionWrapper().getConnection().setBusy(false);
     }
 
+    protected void pause(long ms) throws InterruptedException {
+        Thread.sleep(ms);
+    }
     protected void pause() throws InterruptedException {
-        Thread.sleep(getWaitTime());
+        pause(getWaitTime());
     }
 
+    protected final void write(byte[] data) throws IOException, InterruptedException {
+        final Connection connection = getConnectionWrapper().getConnection();
+        final SerialPort port = connection.getPort();
+
+        final int written = port.writeBytes(data, data.length);
+        pause();
+        if (written <= 0) {
+            throw new IOException("Error writing bytes");
+        }
+    }
+
+    protected final int read(byte[] buffer) throws IOException, InterruptedException {
+        final Connection connection = getConnectionWrapper().getConnection();
+        final SerialPort port = connection.getPort();
+
+        pause();
+        final int bytesRead = port.readBytes(buffer, buffer.length);
+        if (bytesRead <= 0) {
+            throw new IOException("Error reading bytes");
+        }
+        return bytesRead;
+    }
 }

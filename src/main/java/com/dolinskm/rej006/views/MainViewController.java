@@ -89,12 +89,12 @@ public class MainViewController {
     void initialize() {
         final Connection connection = connectionWrapper.getConnection();
 
-        btnDeviceInfo.disableProperty().bind(connection.activeProperty().not());
-        btnOnlineRegistrations.disableProperty().bind(connection.activeProperty().not());
-        btnOfflineRegistrations.disableProperty().bind(connection.activeProperty().not());
+        //btnDeviceInfo.disableProperty().bind(connection.activeProperty().not());
+        //btnOnlineRegistrations.disableProperty().bind(connection.activeProperty().not());
+        //btnOfflineRegistrations.disableProperty().bind(connection.activeProperty().not());
 
         lblPort.textProperty().bind(Bindings.createStringBinding(() -> {
-            if (connection.isActive()) {
+            if (connection != null && connection.isActive() && connection.getPort() != null) {
                 return connection.getPort().getSystemPortName();
             }
             return "?";

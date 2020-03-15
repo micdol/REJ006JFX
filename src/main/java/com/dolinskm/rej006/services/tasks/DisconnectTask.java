@@ -1,6 +1,7 @@
 package com.dolinskm.rej006.services.tasks;
 
 import com.dolinskm.rej006.models.Connection;
+import com.dolinskm.rej006.services.tasks.base.DeviceTaskBase;
 import com.fazecast.jSerialComm.SerialPort;
 
 public class DisconnectTask extends DeviceTaskBase {

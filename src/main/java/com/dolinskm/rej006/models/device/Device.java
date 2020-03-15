@@ -4,15 +4,15 @@ import javafx.beans.property.*;
 
 public class Device {
 
-    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty name = new SimpleStringProperty("");
     private final IntegerProperty id = new SimpleIntegerProperty(-1);
-    private final StringProperty firmware = new SimpleStringProperty();
+    private final StringProperty firmware = new SimpleStringProperty("");
     private final IntegerProperty registrationCount = new SimpleIntegerProperty(-1);
     private final IntegerProperty capacity = new SimpleIntegerProperty(-1);
     private final DoubleProperty battery = new SimpleDoubleProperty(-1.0);
-    private final ObjectProperty<Status> status = new SimpleObjectProperty<>();
+    private final ObjectProperty<Status> status = new SimpleObjectProperty<>(null);
     private final IntegerProperty syncCode = new SimpleIntegerProperty(-1);
-    private final ObjectProperty<Settings> offlineSettings = new SimpleObjectProperty<>();
+    private final ObjectProperty<Settings> offlineSettings = new SimpleObjectProperty<>(null);
 
     // region Properties Getters/Setters
 

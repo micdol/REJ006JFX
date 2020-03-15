@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.Locale;
+
 public class Rej006App extends Application {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -40,7 +42,7 @@ public class Rej006App extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("start");
-
+        Locale.setDefault(new Locale("pl", "PL"));
         final ViewManager viewManager = context.getBean(ViewManager.class);
         viewManager.show(View.Main);
     }
