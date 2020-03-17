@@ -18,7 +18,7 @@ public class BatteryTask extends DeviceReadWriteTask {
             throw new IOException("Invalid data received");
         }
 
-        int voltage = (buffer[0] & 0xff) * 256 + (buffer[1] & 0xff);
+        int voltage = (buffer[1] & 0xff) * 256 + (buffer[0] & 0xff);
         // TODO insert proper formula
         double percentage = voltage / 4096.0;
         logger.info("parseResponse - voltage: {}, percentage: {}", voltage, percentage);

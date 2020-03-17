@@ -3,6 +3,7 @@ package com.dolinskm.rej006.views;
 import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.controls.SettingsGridController;
 import com.dolinskm.rej006.managers.ViewManager;
+import com.dolinskm.rej006.models.device.Mode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,4 +47,11 @@ public class OnlineViewController {
     }
 
     // endregion
+
+    @FXML
+    void initialize() {
+        settingsGridController.getSettings().setMode(Mode.Online);
+        btnStartRegistration.disableProperty().bind(settingsGridController.validProperty().not());
+        btnZeroing.disableProperty().bind(settingsGridController.validProperty().not());
+    }
 }

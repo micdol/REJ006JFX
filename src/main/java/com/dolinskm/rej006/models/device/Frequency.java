@@ -8,5 +8,15 @@ public enum Frequency {
     F400,
     F500,
     F700,
-    F1000
+    F1000;
+
+    public static Frequency of(String s) {
+        return Frequency.valueOf("F" + s.replace(" Hz", ""));
+    }
+
+    @Override
+    public String toString() {
+        final String s = super.toString();
+        return s.substring(1) + " Hz";
+    }
 }

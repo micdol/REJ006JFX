@@ -4,20 +4,21 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 
 public class Settings {
-    private final IntegerProperty delay = new SimpleIntegerProperty();
-    private final IntegerProperty length = new SimpleIntegerProperty();
-    private final IntegerProperty channelCount = new SimpleIntegerProperty();
-    private final ObjectProperty<Frequency> frequency = new SimpleObjectProperty<>();
-    private final ObjectProperty<Accelerometer> accelerometer = new SimpleObjectProperty<>();
-    private final ObjectProperty<Gyroscope> gyroscope = new SimpleObjectProperty<>();
+
+    private final IntegerProperty delay = new SimpleIntegerProperty(0);
+    private final IntegerProperty length = new SimpleIntegerProperty(30);
+    private final IntegerProperty channelCount = new SimpleIntegerProperty(6);
+    private final ObjectProperty<Frequency> frequency = new SimpleObjectProperty<>(Frequency.F100);
+    private final ObjectProperty<Accelerometer> accelerometer = new SimpleObjectProperty<>(Accelerometer.A6);
+    private final ObjectProperty<Gyroscope> gyroscope = new SimpleObjectProperty<>(Gyroscope.G250);
     private final ObjectProperty<Mode> mode = new SimpleObjectProperty<>(Mode.Offline);
-    private final BooleanProperty ax = new SimpleBooleanProperty();
-    private final BooleanProperty ay = new SimpleBooleanProperty();
-    private final BooleanProperty az = new SimpleBooleanProperty();
-    private final BooleanProperty roll = new SimpleBooleanProperty();
-    private final BooleanProperty pitch = new SimpleBooleanProperty();
-    private final BooleanProperty yaw = new SimpleBooleanProperty();
-    private final StringProperty name = new SimpleStringProperty();
+    private final BooleanProperty ax = new SimpleBooleanProperty(true);
+    private final BooleanProperty ay = new SimpleBooleanProperty(true);
+    private final BooleanProperty az = new SimpleBooleanProperty(true);
+    private final BooleanProperty roll = new SimpleBooleanProperty(true);
+    private final BooleanProperty pitch = new SimpleBooleanProperty(true);
+    private final BooleanProperty yaw = new SimpleBooleanProperty(true);
+    private final StringProperty name = new SimpleStringProperty("new settings");
 
     {
         channelCount.bind(
@@ -27,6 +28,44 @@ public class Settings {
                         .add(Bindings.when(roll).then(1).otherwise(0))
                         .add(Bindings.when(pitch).then(1).otherwise(0))
                         .add(Bindings.when(yaw).then(1).otherwise(0)));
+    }
+
+    // TODO maybe better to override equals?
+    public boolean isSame(Settings other) {
+        return other != null
+                && other.getMode() == getMode()
+                && other.getDelay() == getDelay()
+                && other.getLength() == getLength()
+                && other.getFrequency() == getFrequency()
+                && other.getAccelerometer() == getAccelerometer()
+                && other.getGyroscope() == getGyroscope()
+                && other.isAx() == isAx()
+                && other.isAy() == isAy()
+                && other.isAz() == isAz()
+                && other.isRoll() == isRoll()
+                && other.isPitch() == isPitch()
+                && other.isYaw() == isYaw()
+                && other.getName().equals(getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Settings{" +
+                "\ndelay=" + delay +
+                "\n, length=" + length +
+                "\n, channelCount=" + channelCount +
+                "\n, frequency=" + frequency +
+                "\n, accelerometer=" + accelerometer +
+                "\n, gyroscope=" + gyroscope +
+                "\n, mode=" + mode +
+                "\n, ax=" + ax +
+                "\n, ay=" + ay +
+                "\n, az=" + az +
+                "\n, roll=" + roll +
+                "\n, pitch=" + pitch +
+                "\n, yaw=" + yaw +
+                "\n, name=" + name +
+                '}';
     }
 
     // region Properties Getters/Setters

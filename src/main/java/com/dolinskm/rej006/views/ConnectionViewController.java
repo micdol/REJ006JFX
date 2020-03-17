@@ -2,6 +2,7 @@ package com.dolinskm.rej006.views;
 
 import com.dolinskm.rej006.controls.BackPaneController;
 import com.dolinskm.rej006.models.Connection;
+import com.dolinskm.rej006.models.wrappers.IAppSettingsWrapper;
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
 import com.dolinskm.rej006.services.DeviceService;
 import com.dolinskm.rej006.services.tasks.ConnectTask;
@@ -27,6 +28,9 @@ import org.springframework.stereotype.Controller;
 public class ConnectionViewController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private IAppSettingsWrapper appSettingsWrapper;
 
     @Autowired
     private IConnectionWrapper connectionController;
@@ -64,6 +68,10 @@ public class ConnectionViewController {
         deviceService.enqueue(task1);
         deviceService.enqueue(task2);
         deviceService.restart();
+
+        task2.setOnSucceeded(e -> appSettingsWrapper
+                .getAppSettings()
+                .setLastUsedPortName(cbxPorts.getValue().getSystemPortName()));
     }
 
     @FXML
@@ -95,9 +103,20 @@ public class ConnectionViewController {
         btnConnect.disableProperty().bind(connection.activeProperty().or(connection.busyProperty()));
         btnDisconnect.disableProperty().bind(connection.activeProperty().not().or(connection.busyProperty()));
 
-        cbxPorts.requestFocus();
-
         refreshPorts();
+
+        // Select default port if available
+        final ObservableList<SerialPort> items = cbxPorts.getItems();
+        final String lastUsedPortName = appSettingsWrapper.getAppSettings().getLastUsedPortName();
+        for (int i = 0; i < items.size(); i++) {
+            final SerialPort item = items.get(i);
+            if (item.getSystemPortName().equals(lastUsedPortName)) {
+                cbxPorts.getSelectionModel().select(i);
+                break;
+            }
+        }
+
+        cbxPorts.requestFocus();
     }
 
     public void refreshPorts() {

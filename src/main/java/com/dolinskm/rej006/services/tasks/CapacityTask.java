@@ -18,10 +18,10 @@ public class CapacityTask extends DeviceReadWriteTask {
             throw new IOException("Invalid data received");
         }
 
-        int capacity = (buffer[0] & 0xff)
-                + (buffer[1] & 0xff) * 256
-                + (buffer[2] & 0xff) * 256 * 256
-                + (buffer[3] & 0xff) * 256 * 256 * 256;
+        int capacity = (buffer[3] & 0xff)
+                + (buffer[2] & 0xff) * 256
+                + (buffer[1] & 0xff) * 256 * 256
+                + (buffer[0] & 0xff) * 256 * 256 * 256;
 
         logger.info("parseResponse - capacity: {}", capacity);
 
