@@ -27,6 +27,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 public class SettingsGridController {
@@ -113,9 +114,13 @@ public class SettingsGridController {
 
     @FXML
     void onSaveClicked(ActionEvent event) {
-        final Settings settings = getSettings();
-        final File settingsDirectory = appSettingsWrapper.getAppSettings().getSettingsDirectory();
+        final Dialog<String> dialog = saveDialog();
+        dialog.showAndWait().ifPresent(this::onSaveDialog);
+    }
 
+    // endregion
+
+    private Dialog<String> saveDialog() {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Nazwa");
         dialog.setHeaderText(null);
@@ -136,20 +141,46 @@ public class SettingsGridController {
 
         dialog.getDialogPane().setContent(hbox);
         dialog.setResultConverter(btn -> btn == ButtonType.APPLY ? txtName.getText() : null);
-        dialog.showAndWait().ifPresent(name -> {
-            final String prefix = settings.getMode().toString().toLowerCase();
-            final File settingsFile = new File(settingsDirectory, prefix + "_" + name + ".r6s");
-            settings.setName(name);
-            try {
-                SettingsUtils.save(settings, settingsFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+
+        return dialog;
     }
 
-    // endregion
+    private void onSaveDialog(String name) {
+        final Settings settings = getSettings();
+        final File settingsDirectory = appSettingsWrapper.getAppSettings().getSettingsDirectory();
+        final String prefix = settings.getMode().toString().toLowerCase();
+        final File settingsFile = new File(settingsDirectory, prefix + "_" + name + ".r6s");
 
+        // apparently cannot modify simple boolean within lambda later on
+        AtomicBoolean proceed = new AtomicBoolean(true);
+        if (settingsFile.exists()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Plik istnieje - nadpisać?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait().ifPresent(overwrite -> proceed.set(overwrite == ButtonType.YES));
+        }
+
+        if (!proceed.get()) {
+            return;
+        }
+
+        settings.setName(name);
+        try {
+            SettingsUtils.save(settings, settingsFile);
+            // TODO I think if equals is implemented on Settings this can be just items.contains
+            final ObservableList<Settings> items = cbxSettings.getItems();
+            boolean found = false;
+            for (Settings item : items) {
+                if (item.isSame(settings)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                items.add(settings);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public SettingsGridController() {
         settings.addListener(this::onSettingsChanged);
@@ -160,6 +191,7 @@ public class SettingsGridController {
         final Connection connection = connectionWrapper.getConnection();
         final Device device = connection.getDevice();
 
+        device.offlineSettingsProperty().addListener(this::onDeviceSettingsChanged);
         spnDelay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
         spnLength.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 65535, 1));
         cbxFrequency.getItems().addAll(Frequency.values());
@@ -174,6 +206,22 @@ public class SettingsGridController {
         setSettings(new Settings());
     }
 
+    private void onDeviceSettingsChanged(ObservableValue<? extends Settings> o, Settings oldSettings, Settings newSettings) {
+        final Settings settings = this.settings.get();
+        settings.setDelay(newSettings.getDelay());
+        settings.setLength(newSettings.getLength());
+        settings.setAccelerometer(newSettings.getAccelerometer());
+        settings.setFrequency(newSettings.getFrequency());
+        settings.setGyroscope(newSettings.getGyroscope());
+        settings.setAx(newSettings.isAx());
+        settings.setAy(newSettings.isAy());
+        settings.setAz(newSettings.isAz());
+        settings.setRoll(newSettings.isRoll());
+        settings.setPitch(newSettings.isPitch());
+        settings.setYaw(newSettings.isYaw());
+        settings.setMode(newSettings.getMode());
+    }
+
     private void onSettingsChanged(ObservableValue<? extends Settings> o, Settings oldSettings, Settings newSettings) {
         if (oldSettings != null) {
             oldSettings.modeProperty().removeListener(this::onSettingsModeChanged);
@@ -185,10 +233,8 @@ public class SettingsGridController {
             Delay and Length might be "invalid" - its due to the fact that they are bound
             to spinner values, these might change making bound value invalid
             */
-            newSettings.delayProperty().bind(spnDelay.valueProperty());
-            spnDelay.getValueFactory().setValue(newSettings.getDelay());
-            newSettings.lengthProperty().bind(spnLength.valueProperty());
-            spnLength.getValueFactory().setValue(newSettings.getLength());
+            spnDelay.getValueFactory().valueProperty().bindBidirectional(newSettings.delayProperty().asObject());
+            spnLength.getValueFactory().valueProperty().bindBidirectional(newSettings.lengthProperty().asObject());
             cbxFrequency.valueProperty().bindBidirectional(newSettings.frequencyProperty());
             cbxAccelerometer.valueProperty().bindBidirectional(newSettings.accelerometerProperty());
             cbxGyroscope.valueProperty().bindBidirectional(newSettings.gyroscopeProperty());
@@ -266,7 +312,7 @@ public class SettingsGridController {
         return settings;
     }
 
-    private void setSettings(Settings settings) {
+    public void setSettings(Settings settings) {
         this.settings.set(settings);
     }
 

@@ -1,7 +1,10 @@
 package com.dolinskm.rej006.controls;
 
+import com.dolinskm.rej006.models.device.Settings;
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
 import com.dolinskm.rej006.services.DeviceService;
+import com.dolinskm.rej006.services.tasks.ChangeSettingsTask;
+import com.dolinskm.rej006.services.tasks.SettingsTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,12 +45,16 @@ public class OfflineSettingsPaneController {
 
     @FXML
     void onGetSettingsClicked(ActionEvent event) {
-
+        deviceService.enqueue(new SettingsTask());
+        deviceService.restart();
     }
 
     @FXML
     void onSetSettingsClicked(ActionEvent event) {
-
+        final Settings settings = settingsGridController.getSettings();
+        final ChangeSettingsTask changeSettingsTask = new ChangeSettingsTask(settings);
+        deviceService.enqueue(changeSettingsTask);
+        deviceService.restart();
     }
 
     @FXML
