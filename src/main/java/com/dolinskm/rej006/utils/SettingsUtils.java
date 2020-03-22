@@ -6,12 +6,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-public class SettingsUtils {
+public final class SettingsUtils {
 
     private static Logger logger = LoggerFactory.getLogger(SettingsUtils.class);
 
-    public static void save(Settings settings, File file) throws IOException {
-        try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file))) {
+    public static final String FILE_EXTENSION = ".r6s";
+
+    public static void write(Settings settings, OutputStream stream) throws IOException {
+        try (DataOutputStream out = new DataOutputStream(stream)) {
             out.writeUTF(settings.getName());
 
             out.writeUTF(settings.getMode().toString());
@@ -29,13 +31,11 @@ public class SettingsUtils {
             out.writeBoolean(settings.isRoll());
             out.writeBoolean(settings.isPitch());
             out.writeBoolean(settings.isYaw());
-
-            logger.info("saved - " + settings.getName() + " to " + file.getCanonicalPath());
         }
     }
 
-    public static Settings load(File file) throws IOException {
-        try (DataInputStream in = new DataInputStream(new FileInputStream(file))) {
+    public static Settings read(InputStream stream) throws IOException {
+        try (DataInputStream in = new DataInputStream(stream)) {
             final Settings settings = new Settings();
             settings.setName(in.readUTF());
 
@@ -55,10 +55,18 @@ public class SettingsUtils {
             settings.setPitch(in.readBoolean());
             settings.setYaw(in.readBoolean());
 
-            logger.info("loaded - " + settings.getName() + " from " + file.getCanonicalPath());
-
             return settings;
         }
+    }
+
+    public static void save(Settings settings, File file) throws IOException {
+        final FileOutputStream stream = new FileOutputStream(file);
+        write(settings, stream);
+    }
+
+    public static Settings load(File file) throws IOException {
+        final FileInputStream stream = new FileInputStream(file);
+        return read(stream);
     }
 
     public static Settings fromBytes(byte[] bytes) {

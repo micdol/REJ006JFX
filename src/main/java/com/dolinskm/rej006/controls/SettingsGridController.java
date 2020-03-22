@@ -148,16 +148,16 @@ public class SettingsGridController {
     private void onSaveDialog(String name) {
         final Settings settings = getSettings();
         final File settingsDirectory = appSettingsWrapper.getAppSettings().getSettingsDirectory();
+        // Prefix is just online/offline
         final String prefix = settings.getMode().toString().toLowerCase();
-        final File settingsFile = new File(settingsDirectory, prefix + "_" + name + ".r6s");
+        final File settingsFile = new File(settingsDirectory, prefix + "_" + name + SettingsUtils.FILE_EXTENSION);
 
-        // apparently cannot modify simple boolean within lambda later on
+        // apparently cannot modify simple boolean within lambda
         AtomicBoolean proceed = new AtomicBoolean(true);
         if (settingsFile.exists()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Plik istnieje - nadpisać?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-            alert.showAndWait().ifPresent(overwrite -> proceed.set(overwrite == ButtonType.YES));
+            alert.showAndWait().ifPresent(buttonType -> proceed.set(buttonType == ButtonType.YES));
         }
-
         if (!proceed.get()) {
             return;
         }

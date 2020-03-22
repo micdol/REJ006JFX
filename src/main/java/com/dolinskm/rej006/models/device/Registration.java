@@ -7,14 +7,14 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Registration {
     private final ObjectProperty<Settings> settings = new SimpleObjectProperty<>();
     private final ObjectProperty<Mode> mode = new SimpleObjectProperty<>();
     private final ObservableList<Byte> data = FXCollections.observableArrayList();
     private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<LocalTime> date = new SimpleObjectProperty<>();
+    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<>();
     private final StringProperty notes = new SimpleStringProperty();
 
     // region Properties Getters/Setters
@@ -29,6 +29,7 @@ public class Registration {
 
     public void setSettings(Settings settings) {
         this.settings.set(settings);
+        setMode(getSettings().getMode());
     }
 
     public Mode getMode() {
@@ -59,15 +60,15 @@ public class Registration {
         this.name.set(name);
     }
 
-    public LocalTime getDate() {
+    public LocalDateTime getDate() {
         return date.get();
     }
 
-    public ObjectProperty<LocalTime> dateProperty() {
+    public ObjectProperty<LocalDateTime> dateProperty() {
         return date;
     }
 
-    public void setDate(LocalTime date) {
+    public void setDate(LocalDateTime date) {
         this.date.set(date);
     }
 

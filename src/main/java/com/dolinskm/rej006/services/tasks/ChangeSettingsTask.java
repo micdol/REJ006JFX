@@ -1,10 +1,7 @@
 package com.dolinskm.rej006.services.tasks;
 
 import com.dolinskm.rej006.models.device.Settings;
-import com.dolinskm.rej006.services.tasks.base.DeviceReadWriteTask;
 import com.dolinskm.rej006.utils.SettingsUtils;
-
-import java.io.IOException;
 
 public class ChangeSettingsTask extends SettingsTask {
 

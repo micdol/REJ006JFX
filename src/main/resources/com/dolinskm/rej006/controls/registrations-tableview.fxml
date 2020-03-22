@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<fx:root prefHeight="200" prefWidth="200" type="TableView" xmlns="http://javafx.com/javafx/10.0.2-internal"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <columns>
+        <TableColumn fx:id="colName" minWidth="-1.0" prefWidth="-1.0" text="Nazwa"/>
+        <TableColumn fx:id="colDate" minWidth="50.0" prefWidth="-1.0" text="Data"/>
+        <TableColumn fx:id="colFrequency" minWidth="-1.0" prefWidth="-1.0" text="F [Hz]"/>
+        <TableColumn fx:id="colAccelerometer" minWidth="-1.0" prefWidth="-1.0" text="A [g]"/>
+        <TableColumn fx:id="colGyroscope" minWidth="-1.0" prefWidth="-1.0" text="G [deg/s]"/>
+        <TableColumn fx:id="colChannels" minWidth="-1.0" prefWidth="-1.0" text="Kanały"/>
+    </columns>
+    <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+    </columnResizePolicy>
+</fx:root>
