@@ -5,6 +5,11 @@ import com.dolinskm.rej006.services.tasks.base.DeviceTaskBase;
 import com.fazecast.jSerialComm.SerialPort;
 
 public class DisconnectTask extends DeviceTaskBase {
+
+    {
+        setTaskName("Rozłączanie");
+    }
+
     @Override
     protected Void call() throws Exception {
         final Connection connection = getConnectionWrapper().getConnection();
@@ -18,7 +23,7 @@ public class DisconnectTask extends DeviceTaskBase {
 
         updateProgress(2, 2);
         if (isClosed) {
-            updateMessage("Rozłączono z " + port.getSystemPortName() + ".");
+            updateMessage(String.format("Rozłączono z %s.", port.getSystemPortName()));
         } else {
             updateMessage("Błąd rozłączania.");
         }

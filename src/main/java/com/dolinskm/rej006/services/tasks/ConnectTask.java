@@ -6,6 +6,10 @@ import com.fazecast.jSerialComm.SerialPort;
 
 public class ConnectTask extends DeviceTaskBase {
 
+    {
+        setTaskName("Łączenie");
+    }
+
     @Override
     protected Void call() throws Exception {
         final Connection connection = getConnectionWrapper().getConnection();
@@ -27,7 +31,7 @@ public class ConnectTask extends DeviceTaskBase {
 
         updateProgress(2, 2);
         if (isOpen) {
-            updateMessage("Połączono z " + port.getSystemPortName() + ".");
+            updateMessage(String.format("Połączono z %s.", port.getSystemPortName()));
         } else {
             updateMessage("Błąd łączenia.");
         }

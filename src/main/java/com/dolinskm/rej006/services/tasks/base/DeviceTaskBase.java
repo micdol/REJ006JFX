@@ -56,9 +56,15 @@ public abstract class DeviceTaskBase extends Task<Void> {
         getConnectionWrapper().getConnection().setBusy(false);
     }
 
+    @Override
+    protected void updateMessage(String message) {
+        super.updateMessage(String.format("[%s] %s", getTaskName(), message));
+    }
+
     protected void pause(long ms) throws InterruptedException {
         Thread.sleep(ms);
     }
+
     protected void pause() throws InterruptedException {
         pause(getWaitTime());
     }
@@ -75,11 +81,15 @@ public abstract class DeviceTaskBase extends Task<Void> {
     }
 
     protected final int read(byte[] buffer) throws IOException, InterruptedException {
+        return read(buffer, 0, buffer.length);
+    }
+
+    protected final int read(byte[] buffer, int offset, int length) throws IOException, InterruptedException {
         final Connection connection = getConnectionWrapper().getConnection();
         final SerialPort port = connection.getPort();
 
         pause();
-        final int bytesRead = port.readBytes(buffer, buffer.length);
+        final int bytesRead = port.readBytes(buffer, length, offset);
         if (bytesRead <= 0) {
             throw new IOException("Error reading bytes");
         }

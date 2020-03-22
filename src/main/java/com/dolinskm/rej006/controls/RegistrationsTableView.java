@@ -1,6 +1,8 @@
 package com.dolinskm.rej006.controls;
 
 import com.dolinskm.rej006.models.device.*;
+import com.dolinskm.rej006.utils.GUIUtils;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,5 +76,7 @@ public class RegistrationsTableView extends TableView<Registration> {
                     },
                     settings.axProperty(), settings.ayProperty(), settings.azProperty(), settings.rollProperty(), settings.pitchProperty(), settings.yawProperty());
         });
+
+        Platform.runLater(() -> GUIUtils.autoFitTable(this));
     }
 }

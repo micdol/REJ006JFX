@@ -7,7 +7,7 @@ import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
 import com.dolinskm.rej006.services.DeviceService;
 import com.dolinskm.rej006.services.tasks.ConnectTask;
 import com.dolinskm.rej006.services.tasks.DisconnectTask;
-import com.dolinskm.rej006.services.tasks.NameIDTask;
+import com.dolinskm.rej006.services.tasks.RegistrationCountTask;
 import com.dolinskm.rej006.services.tasks.base.DeviceTaskBase;
 import com.dolinskm.rej006.utils.SerialPortListCell;
 import com.fazecast.jSerialComm.SerialPort;
@@ -63,13 +63,13 @@ public class ConnectionViewController {
     void onConnectClicked(ActionEvent event) {
         logger.info("onConnectClicked");
 
-        final DeviceTaskBase task1 = new ConnectTask();
-        final DeviceTaskBase task2 = new NameIDTask();
-        deviceService.enqueue(task1);
-        deviceService.enqueue(task2);
+        deviceService.enqueue(new ConnectTask());
+        // Required for offline registration screen
+        final RegistrationCountTask task = new RegistrationCountTask();
+        deviceService.enqueue(task);
         deviceService.restart();
 
-        task2.setOnSucceeded(e -> appSettingsWrapper
+        task.setOnSucceeded(e -> appSettingsWrapper
                 .getAppSettings()
                 .setLastUsedPortName(cbxPorts.getValue().getSystemPortName()));
     }

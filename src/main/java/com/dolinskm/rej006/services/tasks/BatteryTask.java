@@ -26,7 +26,7 @@ public class BatteryTask extends DeviceReadWriteTask {
         final Device device = getConnectionWrapper().getConnection().getDevice();
         device.setBattery(percentage);
 
-        updateMessage(String.format("[%s] %.02f", getTaskName(), percentage));
+        updateMessage(String.format("%.02f", percentage));
     }
 
     @Override

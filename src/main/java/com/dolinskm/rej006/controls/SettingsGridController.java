@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,36 +113,15 @@ public class SettingsGridController {
 
     @FXML
     void onSaveClicked(ActionEvent event) {
-        final Dialog<String> dialog = saveDialog();
+        final TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("Podaj nazwę ustawień");
+        dialog.setGraphic(null);
+        dialog.setTitle("Nazwa ustawień");
+        Platform.runLater(dialog.getEditor()::requestFocus);
         dialog.showAndWait().ifPresent(this::onSaveDialog);
     }
 
     // endregion
-
-    private Dialog<String> saveDialog() {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Nazwa");
-        dialog.setHeaderText(null);
-        dialog.setGraphic(null);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
-
-        HBox hbox = new HBox();
-        hbox.setSpacing(10);
-
-        TextField txtName = new TextField();
-        txtName.setEditable(true);
-
-        final ObservableList<Node> children = hbox.getChildren();
-        children.add(new Label("Przyjazna nazwa ustawień: "));
-        children.add(txtName);
-
-        Platform.runLater(txtName::requestFocus);
-
-        dialog.getDialogPane().setContent(hbox);
-        dialog.setResultConverter(btn -> btn == ButtonType.APPLY ? txtName.getText() : null);
-
-        return dialog;
-    }
 
     private void onSaveDialog(String name) {
         final Settings settings = getSettings();

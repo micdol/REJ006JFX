@@ -70,6 +70,39 @@ public final class SettingsUtils {
     }
 
     public static Settings fromBytes(byte[] bytes) {
+        if (bytes.length == 13) {
+            return fromOfflineSettingsBytes(bytes);
+        } else if (bytes.length == 14) {
+            return fromRegistrationHeaderBytes(bytes);
+        }
+        throw new IllegalArgumentException("Unrecognized byte sequence");
+    }
+
+    private static Settings fromRegistrationHeaderBytes(byte[] bytes) {
+        final Settings settings = new Settings();
+        settings.setDelay(0); // unrecoverable, assume 0
+        int totalBytes = (bytes[2] & 0xff) * 256 * 256 * 256
+                + (bytes[3] & 0xff) * 256 * 256
+                + (bytes[4] & 0xff) * 256
+                + (bytes[5] & 0xff);
+        final Frequency frequency = Frequency.of(bytes[6]);
+        settings.setAx(bytes[7] == 0x00);
+        settings.setAy(bytes[8] == 0x01);
+        settings.setAz(bytes[9] == 0x02);
+        settings.setRoll(bytes[10] == 0x03);
+        settings.setPitch(bytes[11] == 0x04);
+        settings.setYaw(bytes[12] == 0x05);
+        settings.setAccelerometer(Accelerometer.of(bytes[13]));
+        settings.setGyroscope(Gyroscope.of(bytes[13]));
+
+        int channelCount = settings.getChannelCount();
+        int sampleSize = channelCount * 2; // 2 bytes per channel sample
+        int lengthSeconds = (totalBytes - 14 - 2) / (sampleSize * frequency.getUnitValue());
+        settings.setLength(lengthSeconds);
+        return settings;
+    }
+
+    private static Settings fromOfflineSettingsBytes(byte[] bytes) {
         final Settings settings = new Settings();
         settings.setDelay(bytes[0] & 0xff);
         settings.setLength((bytes[1] & 0xff) + (bytes[2] & 0xff) * 256);

@@ -4,7 +4,9 @@ import com.dolinskm.rej006.models.device.Settings;
 import com.dolinskm.rej006.models.wrappers.IConnectionWrapper;
 import com.dolinskm.rej006.services.DeviceService;
 import com.dolinskm.rej006.services.tasks.ChangeSettingsTask;
+import com.dolinskm.rej006.services.tasks.DisconnectTask;
 import com.dolinskm.rej006.services.tasks.SettingsTask;
+import com.dolinskm.rej006.services.tasks.StartOfflineRegistration;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -59,7 +61,9 @@ public class OfflineSettingsPaneController {
 
     @FXML
     void onStartRegistrationClicked(ActionEvent event) {
-
+        deviceService.enqueue(new StartOfflineRegistration());
+        deviceService.enqueue(new DisconnectTask());
+        deviceService.restart();
     }
 
     // endregion

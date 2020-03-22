@@ -32,20 +32,20 @@ public abstract class DeviceReadWriteTask extends DeviceTaskBase {
     @Override
     protected Void call() throws Exception {
         updateProgress(1, 5);
-        updateMessage(String.format("[%s] Wysyłanie zapytania...", getTaskName()));
+        updateMessage("Wysyłanie zapytania...");
         write(getRequest());
 
         updateProgress(2, 5);
-        updateMessage(String.format("[%s] Oczekiwanie na odpowiedź...", getTaskName()));
+        updateMessage("Oczekiwanie na odpowiedź...");
         pause();
 
         updateProgress(3, 5);
-        updateMessage(String.format("[%s] Czytanie odpowiedzi...", getTaskName()));
+        updateMessage("Czytanie odpowiedzi...");
         byte[] buffer = responseBuffer();
         final int bytesRead = read(buffer);
 
         updateProgress(4, 5);
-        updateMessage(String.format("[%s] Przetwarzanie odpowiedzi...", getTaskName()));
+        updateMessage("Przetwarzanie odpowiedzi...");
         parseResponse(buffer, bytesRead);
 
         updateProgress(5, 5);

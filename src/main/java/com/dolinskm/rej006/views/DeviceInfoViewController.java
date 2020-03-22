@@ -197,7 +197,7 @@ public class DeviceInfoViewController {
         txtFirmware.textProperty().bind(device.firmwareProperty());
         txtFlashCapacity.textProperty().bind(Bindings
                 .when(device.capacityProperty().greaterThanOrEqualTo(0))
-                .then(device.capacityProperty().asString())
+                .then(device.capacityProperty().divide(1024 * 1024).asString("%d MB"))
                 .otherwise(""));
         txtRegistrationCount.textProperty().bind(Bindings
                 .when(device.registrationCountProperty().greaterThanOrEqualTo(0))
@@ -205,7 +205,7 @@ public class DeviceInfoViewController {
                 .otherwise(""));
         txtBattery.textProperty().bind(Bindings
                 .when(device.batteryProperty().greaterThanOrEqualTo(0))
-                .then(device.batteryProperty().asString("%.2f %%"))
+                .then(device.batteryProperty().multiply(100.0).asString("%.2f %%"))
                 .otherwise(""));
         txtStatus.textProperty().bind(Bindings
                 .when(device.statusProperty().isNotNull())

@@ -6,6 +6,7 @@ import com.dolinskm.rej006.models.AppSettings;
 import com.dolinskm.rej006.models.device.Registration;
 import com.dolinskm.rej006.models.wrappers.IAppSettingsWrapper;
 import com.dolinskm.rej006.utils.RegistrationUtils;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -23,6 +26,8 @@ import java.io.IOException;
 @Controller
 @FxmlView("archive-view.fxml")
 public class ArchiveViewController {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ViewManager viewManager;
@@ -106,16 +111,17 @@ public class ArchiveViewController {
         final ObservableList<File> directories = cbxDirectory.getItems();
         directories.add(registrationsDirectory);
 
-        cbxDirectory.getSelectionModel().select(0);
-        cbxDirectory.getEditor().setOnAction(e -> System.out.println(cbxDirectory.getEditor().getText()));
         cbxDirectory.getEditor().focusedProperty().addListener(this::onValidatePathText);
+        cbxDirectory.getSelectionModel().select(0);
 
         tblRegistrations.getSelectionModel().selectedItemProperty().addListener(this::onSelectedRegistrationChanged);
+
+        btnShowPlot.disableProperty().bind(tblRegistrations.getSelectionModel().selectedItemProperty().isNull());
 
         // This will be enabled on registration selection & notes change
         btnSaveNotes.setDisable(true);
 
-        loadRegistrations();
+        Platform.runLater(this::loadRegistrations);
     }
 
     private String previousPathText;
@@ -150,6 +156,7 @@ public class ArchiveViewController {
         final File directory = getSelectedDirectory();
         final File[] registrationFiles = directory.listFiles((dir, name) -> name.endsWith(RegistrationUtils.FILE_EXTENSION));
         if (registrationFiles == null || registrationFiles.length == 0) {
+            logger.info("No registrations in folder: {}", directory);
             return;
         }
         final ObservableList<Registration> registrations = tblRegistrations.getItems();

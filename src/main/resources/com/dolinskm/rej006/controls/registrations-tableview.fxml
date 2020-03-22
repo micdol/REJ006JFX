@@ -6,9 +6,9 @@
     <columns>
         <TableColumn fx:id="colName" minWidth="-1.0" prefWidth="-1.0" text="Nazwa"/>
         <TableColumn fx:id="colDate" minWidth="50.0" prefWidth="-1.0" text="Data"/>
-        <TableColumn fx:id="colFrequency" minWidth="-1.0" prefWidth="-1.0" text="F [Hz]"/>
-        <TableColumn fx:id="colAccelerometer" minWidth="-1.0" prefWidth="-1.0" text="A [g]"/>
-        <TableColumn fx:id="colGyroscope" minWidth="-1.0" prefWidth="-1.0" text="G [deg/s]"/>
+        <TableColumn fx:id="colFrequency" minWidth="-1.0" prefWidth="30" text="F [Hz]"/>
+        <TableColumn fx:id="colAccelerometer" minWidth="-1.0" prefWidth="30" text="A [g]"/>
+        <TableColumn fx:id="colGyroscope" minWidth="-1.0" prefWidth="30" text="G [deg/s]"/>
         <TableColumn fx:id="colChannels" minWidth="-1.0" prefWidth="-1.0" text="Kanały"/>
     </columns>
     <columnResizePolicy>

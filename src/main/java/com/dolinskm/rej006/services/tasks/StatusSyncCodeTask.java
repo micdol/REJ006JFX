@@ -27,7 +27,7 @@ public class StatusSyncCodeTask extends DeviceReadWriteTask {
         device.setStatus(status);
         device.setSyncCode(syncCode);
 
-        updateMessage(String.format("[%s] Status: %s, Sync: %d", getTaskName(), status, syncCode));
+        updateMessage(String.format("Status: %s, Sync: %d", status, syncCode));
     }
 
     @Override

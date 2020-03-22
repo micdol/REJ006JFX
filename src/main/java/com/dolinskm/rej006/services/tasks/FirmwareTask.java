@@ -25,6 +25,6 @@ public class FirmwareTask extends DeviceReadWriteTask {
         final Device device = getConnectionWrapper().getConnection().getDevice();
         device.setFirmware(firmware);
 
-        updateMessage(String.format("[%s] Oprogramowanie: %s", getTaskName(), firmware));
+        updateMessage(String.format("Oprogramowanie: %s", firmware));
     }
 }

@@ -1,21 +1,17 @@
 package com.dolinskm.rej006.models.device;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
 public class Registration {
-    private final ObjectProperty<Settings> settings = new SimpleObjectProperty<>();
-    private final ObjectProperty<Mode> mode = new SimpleObjectProperty<>();
+    private final ObjectProperty<Settings> settings = new SimpleObjectProperty<>(new Settings());
     private final ObservableList<Byte> data = FXCollections.observableArrayList();
-    private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<>();
-    private final StringProperty notes = new SimpleStringProperty();
+    private final StringProperty name = new SimpleStringProperty("new registration");
+    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<>(LocalDateTime.now());
+    private final StringProperty notes = new SimpleStringProperty("");
 
     // region Properties Getters/Setters
 
@@ -29,19 +25,14 @@ public class Registration {
 
     public void setSettings(Settings settings) {
         this.settings.set(settings);
-        setMode(getSettings().getMode());
     }
 
     public Mode getMode() {
-        return mode.get();
+        return getSettings().getMode();
     }
 
-    public ObjectProperty<Mode> modeProperty() {
-        return mode;
-    }
-
-    public void setMode(Mode mode) {
-        this.mode.set(mode);
+    public ReadOnlyObjectProperty<Mode> modeProperty() {
+        return getSettings().modeProperty();
     }
 
     public ObservableList<Byte> getData() {

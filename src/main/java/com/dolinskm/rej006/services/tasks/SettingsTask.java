@@ -30,7 +30,7 @@ public class SettingsTask extends DeviceReadWriteTask {
 
         logger.info("parseResponse - settings: {}", settings);
 
-        updateMessage(String.format("[%s] Koniec", getTaskName()));
+        updateMessage("Koniec");
     }
 
     @Override

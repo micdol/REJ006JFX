@@ -24,7 +24,7 @@ public class RegistrationCountTask extends DeviceReadWriteTask {
         final Device device = getConnectionWrapper().getConnection().getDevice();
         device.setRegistrationCount(registrationCount);
 
-        updateMessage(String.format("[%s] %s", getTaskName(), registrationCount));
+        updateMessage(String.format("Rejestracji: %d", registrationCount));
     }
 
     @Override

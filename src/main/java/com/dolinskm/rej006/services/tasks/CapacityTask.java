@@ -28,7 +28,7 @@ public class CapacityTask extends DeviceReadWriteTask {
         final Device device = getConnectionWrapper().getConnection().getDevice();
         device.setCapacity(capacity);
 
-        updateMessage(String.format("[%s] Pojemność FLASH: %d", getTaskName(), capacity));
+        updateMessage(String.format("Pojemność FLASH: %d", capacity));
     }
 
     @Override

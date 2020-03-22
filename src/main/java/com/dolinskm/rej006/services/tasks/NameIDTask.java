@@ -27,6 +27,6 @@ public class NameIDTask extends DeviceReadWriteTask {
         device.setName(name);
         device.setId(id);
 
-        updateMessage(String.format("[%s] Nazwa: %s, ID: %d", getTaskName(), name, id));
+        updateMessage(String.format("Nazwa: %s, ID: %d", name, id));
     }
 }

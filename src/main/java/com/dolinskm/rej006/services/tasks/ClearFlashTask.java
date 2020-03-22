@@ -18,7 +18,7 @@ public class ClearFlashTask extends DeviceReadWriteTask {
         }
 
         logger.info(String.format("cc? %x 00? %x", buffer[0], buffer[1]));
-        updateMessage(String.format("[%s] Koniec.", getTaskName()));
+        updateMessage("Koniec");
     }
 
     @Override
@@ -29,20 +29,20 @@ public class ClearFlashTask extends DeviceReadWriteTask {
     @Override
     protected Void call() throws Exception {
         updateProgress(1, 5);
-        updateMessage(String.format("[%s] Wysyłanie zapytania...", getTaskName()));
+        updateMessage("Wysyłanie zapytania...");
         write(getRequest());
 
         updateProgress(2, 5);
-        updateMessage(String.format("[%s] Oczekiwanie na odpowiedź...", getTaskName()));
+        updateMessage("Oczekiwanie na odpowiedź...");
         pause(2000);
 
         updateProgress(3, 5);
-        updateMessage(String.format("[%s] Czytanie odpowiedzi...", getTaskName()));
+        updateMessage("Czytanie odpowiedzi...");
         byte[] buffer = responseBuffer();
         final int bytesRead = read(buffer);
 
         updateProgress(4, 5);
-        updateMessage(String.format("[%s] Przetwarzanie odpowiedzi...", getTaskName()));
+        updateMessage("Przetwarzanie odpowiedzi...");
         parseResponse(buffer, bytesRead);
 
         updateProgress(5, 5);
