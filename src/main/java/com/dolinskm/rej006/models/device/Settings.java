@@ -30,22 +30,29 @@ public class Settings {
                         .add(Bindings.when(yaw).then(1).otherwise(0)));
     }
 
-    // TODO maybe better to override equals?
-    public boolean isSame(Settings other) {
-        return other != null
-                && other.getMode() == getMode()
-                && other.getDelay() == getDelay()
-                && other.getLength() == getLength()
-                && other.getFrequency() == getFrequency()
-                && other.getAccelerometer() == getAccelerometer()
-                && other.getGyroscope() == getGyroscope()
-                && other.isAx() == isAx()
-                && other.isAy() == isAy()
-                && other.isAz() == isAz()
-                && other.isRoll() == isRoll()
-                && other.isPitch() == isPitch()
-                && other.isYaw() == isYaw()
-                && other.getName().equals(getName());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Settings settings = (Settings) o;
+        return settings.hashCode() == hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return getDelay()
+                * getLength()
+                * getAccelerometer().getUnitValue()
+                * getGyroscope().getUnitValue()
+                * getFrequency().getUnitValue()
+                * (isAx() ? 2 : 1)
+                * (isAy() ? 3 : 1)
+                * (isAz() ? 5 : 1)
+                * (isRoll() ? 7 : 1)
+                * (isPitch() ? 11 : 1)
+                * (isYaw() ? 13 : 1)
+                * (getMode() == Mode.Online ? 17 : 19);
+        // not comparing names (a.k.a user friendly names) since these are not relevant, only concrete settings matter
     }
 
     @Override

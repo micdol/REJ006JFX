@@ -147,7 +147,7 @@ public class SettingsGridController {
             final ObservableList<Settings> items = cbxSettings.getItems();
             boolean found = false;
             for (Settings item : items) {
-                if (item.isSame(settings)) {
+                if (item.equals(settings)) {
                     found = true;
                     break;
                 }
